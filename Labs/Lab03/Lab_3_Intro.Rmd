@@ -1,0 +1,132 @@
+---
+title: "Lab for Week 3"
+author: ""
+date: "January 30, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lab This Week
+
+For the lab this week, you will have to perform the following tasks.
+
+1. You will individually:
+    * create plots of a health dataset using ggplot()
+    * generate "findings"
+    * write a few sentences in the team report detailing what you did.
+2. As a team, you will produce a lab report in R Markdown. The lab report will include:
+    * an overall question you will answer using the health dataset
+    * an explanation of why that question is important or interesting and a deeper explanation of why that reason(s) is/are important or interesting
+    * one plot that visually "answers" the overall question
+    * a "conclusion" or answer to the overall question in words
+    * given your role as data scientists, you will provide a "recommendation" for action
+    * a series of "findings" and plots based on individuals' work that provides support for your overall conclusion and/or recommendation
+    * a section detailing which team members did what
+    
+Much of the lab this week will focus on plotting. We will get you started with some of the awesome things you can do with ggplot().
+
+# Resource:
+**ggplot cheat sheet:** https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
+
+# ggplot
+
+Let's load the tidyverse package, which contains ggplot inside of it.
+
+```{r echo = TRUE, message = F, warning = F}
+library(tidyverse)
+```
+
+Now we need a dataset to work with. We will use the mtcars dataset, which is automatically built into R
+
+```{r echo = TRUE, message = F, warning = F}
+?mtcars         # Information about the data
+data(mtcars)    # Load the built-in data
+head(mtcars)    # View first few rows of data
+str(mtcars)     # Structure of the data
+summary(mtcars) # Summary of the data
+```
+
+Now it's time to begin plotting. Here is the general format for a ggplot.
+
+### <span style="color:red">Format for a ggplot</span>
+
+```{r echo = TRUE, message = F, warning = F, eval = F}
+# How to make a ggplot
+ggplot(data = "data_frame", aes(x = "x_variable", y = "y_variable", color/fill = "another_variable")) +
+  "geometry" +
+  "whatever_other_layers_you_want"
+```
+
+### Example 1: A basic histogram with title and labels
+
+```{r echo = TRUE, message = F, warning = F}
+# Histogram of miles per gallon
+ggplot(data = mtcars, aes(x = mpg)) +  # Build a graph
+  geom_histogram(bins = 5) +           # Add a histogram layer
+  ggtitle('Histogram of MPG') +        # Plot title
+  xlab('Miles per gallon (MPG)')       # x-label title
+```
+
+### Example 2: A scatter plot, grouped by a third variable
+
+```{r echo = TRUE, message = F, warning = F}
+# Histogram of miles per gallon
+ggplot(data = mtcars, aes(x = wt, y = hp, color = as.factor(vs))) +  # Build a graph
+  geom_point() +                                                     # Add a scatter plot
+  ggtitle('Vehicle horsepower vs. weight') +                         # Plot title
+  xlab('Weight (lb)') +                                              # x-label title
+  ylab('Horse Power') +                                              # y-lable title
+  scale_color_discrete(name = 'Engine',                              # Edit legend
+                       labels = c('V-shaped', 'Straight'))
+```
+
+### Example 3: A box plot of number of gears vs. MPG, with other layers
+
+```{r echo = TRUE, message = F, warning = F}
+# Histogram of miles per gallon
+ggplot(data = mtcars, aes(x = as.factor(gear), y = mpg, fill = as.factor(gear))) +  # Build a graph
+  geom_boxplot() +                                                                  # Add boxplot layer
+  geom_point(position = 'jitter') +                                                 # Add points w/ position adjust
+  ggtitle('Number of gears vs. MPG') +                                              # Plot title
+  xlab('Number of gears') +                                                         # x-label title
+  ylab('MPG') +                                                                     # y-label title
+  scale_fill_discrete(name = 'Gears',                                               # Edit legend
+                       labels = c(3,4,5)) +
+  theme_bw() +                                                                      # Black and white theme
+  labs(caption = "A box-plot displaying the MPG performance among cars with different gears.") # Caption
+```
+
+# How intense can ggplot get?
+
+```{r echo = TRUE, message = F, warning = F, eval = F}
+# Example of an intense ggplot
+ggplot(data = prop_data, aes(x = Age, y = Correct)) +                                 # Build a graph
+  geom_point() +                                                                      # Add scatter plot geometry
+  ggtitle('Proportion Correct vs. Age') +                                             # Add title
+  xlab('Age') +                                                                       # Change x-label
+  ylab('Proportion Correct') +                                                        # Change y-label
+  geom_smooth(method = 'lm') +                                                        # Add best-fit line
+  scale_x_continuous(trans='log10',                                                   # x-axis in log10 scale
+                     breaks = seq(2,7.5,by=1/4),                                      # x-tick spacing
+                     labels = c(2, rep("",3), 3, rep("",3), 4, rep("",3),             # x-tick labels
+                                5, rep("",3), 6, rep("",3), 7, rep("",2)),            
+                     limits = c(2,7.5),                                               # x-scale limits
+                     sec.axis = dup_axis(labels = rep("", length(seq(2,7.5,by=1/4))), # Add axis to top of plot
+                                         name = "")) +
+  scale_y_continuous(breaks= seq(.84,1,by=.01),                                       # y-tick spacing
+                     labels = c(.84, "", .86, "", .88, "", .90, "",                   # y-tick labels
+                                .92, "", .94, "", .96, "", .98, "", 1.00), 
+                     limits = c(.84,1),                                               # y-scale limits
+                     oob=scales::rescale_none,                                        # Don't remember what this does
+                     sec.axis = dup_axis(labels = rep("", 17), name = "")) +          # Add axis to right of plot
+  geom_point(data = subject6, aes(x = Age, y = Correct), color = 'red') +             # Add red point from other data
+  theme_bw() +                                                                        # Black and white background
+  theme(text = element_text(size=16),                                                 # Title text size
+        axis.text.x = element_text(size = 16),                                        # x-label text size
+        axis.text.y = element_text(size = 16),                                        # y-label text size
+        panel.grid.major = element_blank(),                                           # Can't remember
+        panel.grid.minor = element_blank())                                           # Can't remember
+```
