@@ -25,7 +25,7 @@ str(diamonds)
 ##### Exercise 3 #####
 
 # Bar plot of cut class, grouped by clarity
-ggplot(data = diamonds, aes(x = cut, fill = clarity)) + 
+ggplot(data = diamonds, aes(x = cut, fill = as.factor(clarity))) + 
   geom_bar(position = 'dodge')
 
 ##### Exercise 4 #####
@@ -35,3 +35,8 @@ df <- diamonds %>%
   filter((cut == 'Ideal') & (clarity %in% c('SI1','SI2')))
 
 ##### Exercise 5 #####
+
+# Subset diamond data by 'ideal' cut, select carat column
+df <- diamonds %>%
+  filter((cut == 'Ideal') & (clarity %in% c('SI1','SI2'))) %>%
+  select(carat)
