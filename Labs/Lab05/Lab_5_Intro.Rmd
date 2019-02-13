@@ -1,0 +1,66 @@
+---
+title: "Week 5 Exercises"
+author: ""
+date: "February 13, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lab This Week
+
+Your job is to master the gollowing tidyverse functions: group_by, arrange, mutate, select, filter, and summarise.
+
+We will be working with a dataset in the "DALEX2" pacage. Let's install the package.
+
+```{r echo = TRUE, message = F, warning = F, eval = F}
+# Install package
+install.packages('DALEX2')
+```
+
+Now let's load both the DALEX2 package and the tidyverse
+
+```{r echo = TRUE, message = F, warning = F}
+library(DALEX2)
+library(tidyverse)
+```
+
+Finally, let's load our dataset, we will be working with a datset on dragons. Run the following code to load the datset.
+
+```{r echo = TRUE, message = F, warning = F}
+data(dragons)
+View(dragons)
+```
+
+Now let's explorre this dataset a bit. Suppose we're interested in computing the number of dragons of each color. We can do that with the following code.
+
+```{r echo = TRUE, message = F, warning = F}
+# Count dragons of each color
+dragon_count <- dragons %>%
+  group_by(colour) %>%
+  summarise(Number = n()) %>%
+  as_tibble()
+dragon_count
+```
+
+Now, suppose we want to look at only the pretty dragons (less than 5 scars and 5 missing teeth). We can filter the dragons with the following.
+
+```{r echo = TRUE, message = F, warning = F}
+# Dragons less than 5 scars
+pretty_dragons <- dragons %>%
+  filter(scars < 5 & number_of_lost_teeth < 5) %>%
+  as_tibble()
+pretty_dragons
+```
+
+Your job is to perform the following tasks:
+
+1. Create a table of the 5 dragons with the most scars, displaying their year of birth, scars, color, and number of lost teeth. (Hint: Use function top_n)
+
+2. Among the dragons that have greater than 20 scars, what number are blue?
+
+3. On **average**, dragons of which color lost the most teeth. Create a table displaying these averages.
+
+Once you have mastered the dragons dataset, you may move on to your lab. Good luck.
