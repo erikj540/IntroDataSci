@@ -25,7 +25,7 @@ Here are two useful probability rules:
 Heuristically you can think of the probability of an event $E$ as
 \[ p(E) = \frac{\text{number of favorable outcomes}}{\text{number of possible outcomes}} \]
 
-Suppose you're interested in calculating the probability that you draw a 5 of any suit from a standard (shuffled) deck of cards. The event here is $E=\text{draw a 5 of any suit}$. There are four 5s in a deck of cards so the number of favorable outcomes is 4. There are 52 possible cards you could have drawn so the number of possible outcomes is 52. Thus,
+For instance, suppose you're interested in calculating the probability that you draw a 5 of any suit from a standard (shuffled) deck of cards. The event here is $E=\text{draw a 5 of any suit}$. There are four 5s in a deck of cards so the number of favorable outcomes is 4. There are 52 possible cards you could have drawn so the number of possible outcomes is 52. Thus,
 \[ p(E) = \frac{4}{52} \]
 
 ## Exercises
