@@ -1,0 +1,41 @@
+---
+title: "Week 6 Exercises"
+author: ""
+date: "February 20, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Lab This Week
+
+The purpose of the exercises this week is to make you more comfortable calculating and working with probabilities, joint probabilities, and conditional probabilities. 
+
+## Introduction
+
+We denote the probability of an event $E$ (e.g., rolling a 1 on a fair 6-sided die) by $p(E)$. Given two events $E_1$ and $E_2$, the probability of both $E_1$ and $E_2$ happening is denoted by $p(E_1, E_2)$ and is called the joint probability of $E_1$ and $E_2$. The probability that $E_1$ happens given that $E_2$ happened is called the conditional probability of $E_1$ given $E_2$ and is denoted by $p(E_1 | E_2)$. 
+
+Here are two useful probability rules and one useful concept:
+
+* $p(E_1 | E_2) = \frac{p(E_1,E_2)}{p(E_1)}$
+* Bayes Theorem/Rule: $p(E_1 | E_2) = \frac{p(E_2 | E_1) p(E_1)}{p(E_2)}$
+
+Heuristically you can think of the probability of an event $E$ as
+\[ p(E) = \frac{\text{number of favorable outcomes}}{\text{number of possible outcomes}} \]
+
+Suppose you're interested in calculating the probability that you draw a 5 of any suit from a standard (shuffled) deck of cards. The event here is $E=\text{draw a 5 of any suit}$. There are four 5s in a deck of cards so the number of favorable outcomes is 4. There are 52 possible cards you could have drawn so the number of possible outcomes is 52. Thus,
+\[ p(E) = \frac{4}{52} \]
+
+## Exercises
+
+1. What is the probability of rolling two consectuive fives on a fair six-sided die?
+
+2. Two cards are drawn randomly from a deck of cards. What is the likelihood that both cards are clubs?
+
+3. A jar contains 4 blue marbles, 5 red marbles, and 11 white marbles. If three marbles are drawn from the jar at random, what is the probability that the first marble is red, the second marble is blue, and the third is white?
+
+4. Suppose you are a statistician at a medical clinic.  From past data you know that 10% of patients entering the clinic have liver disease and 5% of patients are alcoholics. You also know that among those patients diagnosed with liver disease 7% are alcoholics. What is the probability that a patient has liver disease given that they are an alcoholic?
+
+After completing these exercises, you may move on to your lab. Good luck.
