@@ -17,7 +17,7 @@ The purpose of the exercises this week is to make you more comfortable calculati
 
 We denote the probability of an event $E$ (e.g., rolling a 1 on a fair 6-sided die) by $p(E)$. Given two events $E_1$ and $E_2$, the probability of both $E_1$ and $E_2$ happening is denoted by $p(E_1, E_2)$ and is called the joint probability of $E_1$ and $E_2$. The probability that $E_1$ happens given that $E_2$ happened is called the conditional probability of $E_1$ given $E_2$ and is denoted by $p(E_1 | E_2)$. 
 
-Here are two useful probability rules and one useful concept:
+Here are two useful probability rules:
 
 * $p(E_1 | E_2) = \frac{p(E_1,E_2)}{p(E_1)}$
 * Bayes Theorem/Rule: $p(E_1 | E_2) = \frac{p(E_2 | E_1) p(E_1)}{p(E_2)}$
