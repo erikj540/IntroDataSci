@@ -52,3 +52,10 @@ str(data)
 data <- fread('household_power_consumption.txt',        # Filename 
               na.strings = c("NA","", "?"))             # Choose NA characters
 str(data)
+
+# Change columns
+library(lubridate)
+
+# Create year, month, day column
+data <- data %>%
+  mutate(Year = year())
