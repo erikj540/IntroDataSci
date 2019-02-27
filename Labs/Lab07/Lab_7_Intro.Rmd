@@ -1,0 +1,70 @@
+---
+title: "Week 7 Exercises"
+author: ""
+date: "February 13, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lab This Week
+
+For this lab, you will analyze a real dataset using the tools you have learned thus far. You will independently come up with interesting questions to answer using the dataset. Although this may seem like an annoying task, it is in fact what you will be doing a lot as a data scientist-making sense of data often without a priori clearly defined questions. For instance, for a recent internship coding interview, Erik was given a dataset and his deliverable was to "present something interesting that he learned from the data."
+
+You will be analyzing a dataset from the UC Irvine Machine Learning Repository. The data set we will be using is called the "Individual household electric power consumption data set". It consists of measurements of electric power consumption and several electrical quantities from one household with a one-minute sampling rate over a period of almost 4 years.
+
+Note that this dataset contains missing values.
+
+# Data Import
+
+We will be going over the data import procedure with you. Go to the machine learning repository and download the data. It should be called: "household_power_consumption.txt"
+
+
+### read.table
+
+Once you have the data, start a script file and place it in the same directory as your data file. Set your working directory and try to load the data with the read.table function in the baseR package (loaded by defalut). The documentation is listed here
+
+* https://www.rdocumentation.org/packages/utils/versions/3.5.2/topics/read.table
+
+```{r echo = TRUE, message = F, warning = F, eval = F}
+# Load the data
+data1 <- read.table('household_power_consumption.txt')  # Filename
+```
+
+Did this do what we want it to? What went wrong? Let's work together as a team to get this data loaded in the correct format.
+
+### fread
+
+Now let's try using the fread function. Note that the fread function is in the data.table package. The documentation is listed here.
+
+* https://www.rdocumentation.org/packages/data.table/versions/1.12.0/topics/fread
+
+```{r echo = TRUE, message = F, warning = F, eval = F}
+# Load the data
+data <- fread('household_power_consumption.txt')
+```
+
+# Exploratory Data Analysis
+
+Taken directly from "R for Data Science": EDA is an iterative cycle. You:
+
+1. Generate questions about your data.
+
+2. Search for answers by visualising, transforming, and modelling your data.
+
+3. Use what you learn to refine your questions and/or generate new questions.
+
+Don't forget about all of the tools that you have to investigate this data. You are now experts in the following.
+
+* Data wrangling using common dplyr functions of select, filter, group_by, summarise, mutate, and arrange. Use these functions to subset your data by the conitions that you want.
+
+* Making great data visualizations. You have seen: histograms, density plots, box-plots, bat-plots, jitter plots, and more. Often, plots are more informational than statistics.
+
+# Go Explore
+
+
+
+
+
