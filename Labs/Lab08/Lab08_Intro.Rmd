@@ -1,0 +1,104 @@
+---
+title: "Lab 8 Exercises"
+author: "Erik Johnson"
+date: "March 6, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Introduction
+The purpose of the exercises this week are to learn/review:
+
+1. how to create tibbles
+2. how to use the `spread()`, `gather()`, `separate()`, and `unite()` commands
+3. review some of the important commands that you have learned thus far. 
+
+# Creating Tibbles
+When using the tidyverse, we generally store data in tibbles. There are other ways to store data (e.g., in a `data.frame`) but tibbles are generally better. You can read about the reasons why they are better in chapter 10 of "R for Data Science".
+
+* If you already have a dataset stored in some non-tibble form, you can convert it to a tibble using `as_tibble()`
+* To create a new tibble, you use the `tibble()` command, e.g.,
+
+```{r, include=TRUE}
+tibble(
+  x = 1:5,
+  y = 1, 
+  z = x^2 + y
+)
+```
+* You can also use `tribble()` which uses `~` to specify column headings and commas to separate entries, e.g.,
+```{r, include=TRUE}
+tribble(
+  ~':)', ~y, ~x,
+  
+  "smile", 3, 4,
+  1, "y", "x"
+)
+```
+
+### Exercise
+Create a tibble containing each of your team member's name, age, date of birth (in "##/##/####" format), favorite band, and favorite song of favorite band. Create this tibble using both the `tibble()` command and the `tribble()` command.
+
+# Gathering, Spreading, Separating, and Uniting
+
+### Gathering
+Gathering is used to fix the case when one variable is spread across multiple columns. Consider the following tibble which has the number of TB cases in the given countries in the given years
+
+```{r, include=TRUE}
+df <- tibble(
+  'country' = c("Afghanistan", "Brazil", "China"),
+  '1999' = c(745, 37737, 212258),
+  '2000' = c(266, 80488, 213766)
+)
+df
+
+```
+Here the year is variable and 1999 and 2000 are values the variable year can take. So we have one variable spread across multiple columns. To fix this we use the `gather()` command:
+```{r, include=TRUE}
+df %>% gather('1999', '2000', key="year", value="cases")
+```
+
+### Spreading
+Spreading is used when an observation is scattered across multiple rows. For example consider the following tibble which is similar to the tibble from the gathering section but also contains each country's population:
+```{r, include=T}
+df <- tibble(
+  'country' = c("Afghanistan", "Afghanistan", "Afghanistan", "Afghanistan", "Brazil", "Brazil"),
+  'year' = c(1999, 1999, 2000, 2000, 1999, 1999),
+  'type' = c("cases", "population", "cases", "population", "cases", "population"),
+  'count' = c(745, 19987071, 266, 20595360, 37737, 172006362)
+)
+df
+```
+Here one observation is spread across two rows or, to say it a different way, there are two variables in one column. There should be a "cases" column and a "population" column. To fix this we use the `spread()` command:
+```{r, include=T}
+df %>% spread(key=type, value=count)
+```
+
+### Separating
+The `separate()` command pulls apart one column into multiple columns. For example, regarding the tibble you created in the "Creating Tibbles" section above, for some application you might want to separate the date of birth column into a day, month, and year column. 
+
+### Uniting 
+The `unite()` command combines multiple columns into a single column. For example, regarding the tibble you created in the "Creating Tibbles" section above, for some application you might want to combine the favorite band and favorite song of favorite band columns into one column.
+
+### Exercises
+1. Create a new tibble from the tibble you created in the "Creating Tibbles" section in which you separate the date of birth column into a day, month, and year column
+2. Create a new tibble from the tibble you created in the "Creating Tibbles" section in which you combine the favorite band and favorite song of favorite band columns into one column with the form "<favorite song of favorite band>-<favorite band>"
+
+
+<!-- # Command Review -->
+<!-- In your groups, take turns explaining in plain English what each of the following commands does and what arguments the command takes -->
+
+<!-- * `filter()` -->
+<!-- * `arrange()` -->
+<!-- * `select()` -->
+<!-- * `mutate()` -->
+<!-- * `transmutate()` -->
+<!-- * `summarise()` -->
+<!-- <!-- * `%>%` --> 
+<!-- * `group_by()` -->
+
+You may now move on to your lab. Good luck.
