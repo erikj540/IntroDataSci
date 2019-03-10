@@ -1,0 +1,150 @@
+---
+title: "Week 9 Exercises"
+author: ""
+date: "February 13, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lab This Week
+
+You have to individually:
+
+  * join datasets
+  * work with and manipulate strings
+  * work with and manipulate factors
+  * work with and manipulate dates and times
+  
+Let's make sure we have a handle on all of these skills.
+
+```{r echo = F, message = F, warning = F}
+
+# Load tidyverse
+library(tidyverse)
+```
+  
+## Joining Data
+
+Sometimes our data is in two separate data frames, and we want to combine them into one. There are four diffferent ways to join data.
+
+<center>
+![](data_joining.png){width=500px}
+</center>
+
+**Exercise**: Let's practice an example with full_join. If you were to use left_join, how many rows would there be in our new data frame? Check your answer.
+
+```{r echo = T, message = F, warning = F}
+
+# Generate tibbles to work with
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     3, "x3"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2",
+     4, "y3"
+)
+
+# Join the data frams
+xy <- x %>%
+  full_join(y, by = "key")
+```
+
+## Strings
+
+A large chunk of data science involves Natural Language Processing, so it's beneficial to know how to work with strings. For the data science applications that we cover in this class, we don't work with strings too often. However, knowing the basics is extremely helpful when you do have to use it. 
+
+```{r echo = T, message = F, warning = F}
+
+# Generate strings
+str1 <- "This is my string"
+str2 <- "Puppies"
+str3 <- "Kitties"
+strVec <- x <- c("Ramthorn", NA)
+
+# Length of string
+str_count(str1)
+length(str1) # What does this do?
+
+# Combining strings
+str_combined <- str_c(str2, str3, sep = ", ")
+
+# Dealing with NAs
+str_c(strVec)[2] # Recognized as NA data type
+str_c(str_replace_na(strVec))[2] # Convert NA to string
+
+# Subsetting strings
+str_sub(str1, 1, 4)
+str_sub(str1, -6, -1)
+```
+
+## Factors
+
+You have been working with factors all along. These are categorical variables (sometimes I call them group variables). Factors are made up of two parts: a value and a level (group).
+
+```{r echo = T, message = F, warning = F}
+
+# Generate string vector
+x <- c("Dec", "Apr", "Jan", "Mar")
+
+# Convert to factor
+xFact <- factor(x)
+xFact
+
+# Add a new month
+# What the heck happened?
+xFact <- c(xFact, "Feb") # Don't do this
+xFact # Bad
+
+# Add a new month
+xFact[5] <- "Feb"
+xFact # Bad
+
+# Construct month levels
+month_levels <- c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+# Convert to factor
+xFact2 <- factor(x, levels = month_levels)
+xFact2[5] <- "Feb"
+xFact2 # Good
+
+```
+
+## Dates and Times
+
+If you don't have the correct tools, working with dates and times can be quite the headache. Luckily, R has a package called "lubridate" that makes working with dates and times much easier. [Here](https://cran.r-project.org/web/packages/lubridate/lubridate.pdf) is a link to the CRAN page.
+
+```{r echo = T, message = F, warning = F}
+
+# Load lubridate library
+library(lubridate)
+
+# Generate sample dates
+date1 <- as.Date("07/13/1994", format = "%m/%d/%Y")
+date2 <- as.factor("07/13/1994 1:31")
+date3 <- "1994-05-02 5:30AM"
+
+# Extract components of dates
+year(date1)
+day(date1)
+month(date1)
+
+# Parse the dates
+date2 <- mdy_hm(date2)
+date3 <- ymd_hm(date3)
+
+# Can we parse this date?
+# Format: "mmddyyyyHHMM"
+date4 <- "071319940130"
+```
+
+**Have some fun with the lab this week!**
