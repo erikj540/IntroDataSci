@@ -1,0 +1,82 @@
+---
+title: "Lab 10 Exercises"
+author: "Erik Johnson"
+date: "March 20, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Introduction
+
+Feature engineering is the process of creating new input features from existing ones. In data science and particularly machine learning, feature engineering is often one of the most valuable tasks that a data scientist does. Well constructed features can drastically improve model performance. Heuristically, feature engineering allows you to isolate and highlight key information which helps your algorithms "focus" on what's important and allows you to bring in domain expertise. 
+
+I highly recommended reading [this article](https://elitedatascience.com/feature-engineering) which is short and goes over a few good ideas to consider when constructing features. Ideas for this document were taken from the linked website and from Chris Ketelsen's Machine Learning course at CU.
+
+Feature engineering is generally done on a case-by-case basis depending on the data and task. So it is probably best to learn through examples. Hence the following examples. The linked article above gives a few general ideas that are often useful when constructing features.
+
+# Examples
+
+## Example 1
+Say you are trying to predict whether it is possible to drive between two cities in a single day. The raw data includes the latitude and longitude of the two cities.  For example,
+```{r, include=T}
+df <- tibble(
+  "City1Long" = c(46.71, 56.91, 46.71, 46.71),
+  "City1Lat" = c(123.23, 123.24, 123.24, 123.24),
+  "City2Long" = c(47.34, 55.23, 55.34, 47.34),
+  "City2Lat" = c(121.33, 121.33, 121.33, 130.99)
+)
+
+```
+
+To analyze drivability in one day, you probably want to construct some variable (i.e., to engineer a feature) that encapsulates the distance between the two cities.
+
+**Exercise**: Create a new column in the above tibble that is 
+\[ \texttt{Distance} = \sqrt{(\texttt{City1Long} -\texttt{City2Long})^2 + (\texttt{City1Lat} -\texttt{City2Lat})^2 } \]
+
+## Example 2
+Suppose that you're trying to train a model to predict that amount of foot-traffic at the 29th Street Mall.  Mall managers might be interested in such a model to predict the amount of janitorial and security services they need to employ at different times.  
+
+Suppose your training data consists of measurements of the amount of foot traffic at the mall and the date/time stamps that they were measured.  For instance, a training set might look like 
+
+|$\texttt{date_time_stamp}$| $\texttt{FootTraffic}$|
+|:-------:|:------:|
+|$\texttt{2015-11-12-20:00}$| 70|
+|$\texttt{2015-06-10-21:00}$| 100|
+|$\texttt{2015-08-02-12:00}$| 120|
+|$\texttt{2015-12-22-12:00}$| 20|
+
+**Exercise**: Talk amongst your team about how you might create meaningful features on the $\texttt{date_time_stamp}$ data that would be useful for prediction? 
+
+## Example 3
+Suppose you are trying to predict real-estate prices and included in your data is a feature called $\texttt{num_schools}$ which gives the number of schools within 5 miles of a property and a feature called $\texttt{median_school}$ which gives the median quality score of those schools. Individually these two variables may be less predictive of real-estate prices than a variable that measures having many good school options. 
+
+**Exercise**: How could you use $\texttt{num_schools}$ and $\texttt{median_school}$ to come up with a new feature that is indicative of the number of good schools?
+
+
+
+
+<!-- |$\texttt{CITY 1 LAT.}$ | $\texttt{CITY 1 LNG.}$ |$\texttt{CITY 2 LAT.}$ | -->
+<!-- $\texttt{CITY 2 LNG.}$ | $\texttt{DRIVABLE}$? | -->
+<!-- |:----:|:----:|:----:|:----:|:----:| | 123.24 |46.71	| 121.33| 47.34	| Yes | -->
+<!-- |123.24	|56.91	|121.33	|55.23	|Yes | |123.24	|46.71	|121.33	|55.34	|No | -->
+<!-- |123.24	|46.71	|130.99	|47.34	|No | -->
+
+
+
+<!-- # Command Review -->
+<!-- In your groups, take turns explaining in plain English what each of the following commands does and what arguments the command takes -->
+
+<!-- * `filter()` -->
+<!-- * `arrange()` -->
+<!-- * `select()` -->
+<!-- * `mutate()` -->
+<!-- * `transmutate()` -->
+<!-- * `summarise()` -->
+<!-- <!-- * `%>%` --> 
+<!-- * `group_by()` -->
+
+**You may now move on to your lab. Good luck.**
