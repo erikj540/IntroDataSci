@@ -57,26 +57,4 @@ Suppose you are trying to predict real-estate prices and included in your data i
 **Exercise**: How could you use $\texttt{num_schools}$ and $\texttt{median_school}$ to come up with a new feature that is indicative of the number of good schools?
 
 
-
-
-<!-- |$\texttt{CITY 1 LAT.}$ | $\texttt{CITY 1 LNG.}$ |$\texttt{CITY 2 LAT.}$ | -->
-<!-- $\texttt{CITY 2 LNG.}$ | $\texttt{DRIVABLE}$? | -->
-<!-- |:----:|:----:|:----:|:----:|:----:| | 123.24 |46.71	| 121.33| 47.34	| Yes | -->
-<!-- |123.24	|56.91	|121.33	|55.23	|Yes | |123.24	|46.71	|121.33	|55.34	|No | -->
-<!-- |123.24	|46.71	|130.99	|47.34	|No | -->
-
-
-
-<!-- # Command Review -->
-<!-- In your groups, take turns explaining in plain English what each of the following commands does and what arguments the command takes -->
-
-<!-- * `filter()` -->
-<!-- * `arrange()` -->
-<!-- * `select()` -->
-<!-- * `mutate()` -->
-<!-- * `transmutate()` -->
-<!-- * `summarise()` -->
-<!-- <!-- * `%>%` --> 
-<!-- * `group_by()` -->
-
 **You may now move on to your lab. Good luck.**
