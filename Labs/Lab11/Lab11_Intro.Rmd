@@ -1,0 +1,139 @@
+---
+title: "Week 11 Exercises"
+author: ""
+date: "February 13, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lab This Week
+
+You have to individually:
+
+  * work with and manipulate strings with regular expressions
+  * compute and visualize percentiles and probabilities
+  
+## Preliminary
+  
+Let's start with loading our packages.
+
+```{r echo = T, message = F, warning = F}
+
+# Load tidyverse
+library(tidyverse)
+```
+  
+## Regular Expressions
+
+See section 14.3 in *R for Data Science* for more practice working with regular expressions. We will only cover a few things here.
+
+Let's start by generating a table of names, along with a coolness ranking from 0 to 10.
+
+```{r echo = T, message = F, warning = F}
+
+# Generate tibbles to work with
+name_table <- tribble(
+  ~Name, ~Coolness,
+     "Mike", 10,
+     "Eric", 10,
+     "Erik", 9,
+     "Ann", 8,
+     "Matt", 1,
+     "Dan", 0,
+     "Erin", 10,
+     "Sue", 6,
+     "Alice", 7
+)
+```
+
+Suppose we want to filter all names that start with an "E". We can do this with a regular expression via the following.
+
+```{r echo = T, message = F, warning = F}
+
+# Extract names that start with an E
+letterE <- name_table %>%
+  filter(str_detect(Name, "^E") == T)
+letterE
+```
+
+We can also compute the number or proportion of names that start with the letter E. 
+
+```{r echo = T, message = F, warning = F}
+
+# Compute number
+numbE <- name_table %>%
+  summarise(Prop = sum(str_detect(Name, "^E"))) %>%
+  as.numeric()
+
+# Compute proportion
+propE <- name_table %>%
+  summarise(Prop = mean(str_detect(Name, "^E"))) %>%
+  as.numeric()
+```
+
+**Exercise**: Compute the proportion of words that end in a vowel.
+
+```{r echo = F, message = F, warning = F, eval = F}
+
+# Compute proportion
+propV<- name_table %>%
+  summarise(Prop = mean(str_detect(Name, "[aeiou]$"))) %>%
+  as.numeric()
+
+```
+
+## Percentiles
+
+You will also need to compute percentiles and probabilities this week. Taken from Wikipedia: "A percentile is a measure used in statistics indicating the value below which a given percentage of observations in a group of observations falls. For example, the 20th percentile is the value below which 20% of the observations may be found."
+
+Suppose we wanted compute the percentiles of the "Coolness". Note that we are interpreting "Coolness" as a continuous number here, so our interpretation is a little weird. In your lab this week, you will be computing percentiles on proportions, which are continuous.
+
+Here is how we can do it in R.
+
+```{r echo = T, message = F, warning = F}
+
+# Compute quantiles
+quantile(name_table$Coolness)
+
+# Designate the percentiles to compute
+quantile(name_table$Coolness, c(.3,.6,.9))
+
+```
+
+## Probabilities
+
+Suppose we are interested in the question, "Is the name Erik actually really cool?"
+
+His coolness paramter is a 9 out of 10, which is pretty high. This may suggest that the name is really cool. However, how cool is that name relative to everyone else?
+
+To answer this question, we can can start with a histogram of the coolness paramter for all the names in the dataset. Then we add in a line corresponding to Erik's score.
+
+```{r echo = T, message = F, warning = F}
+
+# Compute histogram
+# Bar plot is better for this categorical data
+ggplot(data = name_table, aes(x = Coolness)) +
+  geom_histogram(bins = 11) + 
+  theme_bw() +
+  geom_vline(xintercept = 9, color = 'red') +
+  ggtitle('Coolness of the name Erik')
+
+```
+
+There are alot of cooler names than "Erik". Maybe a score of 9 doesn't indicate a cool name? If everyone has cool names, can you actually have a cool name?
+
+**Exercise**: Compute the probability of having a cooler name than Erik.
+
+```{r echo = F, message = F, warning = F, eval = F}
+
+# Compute probability
+probC <- name_table %>%
+  mutate(Cooler = ifelse(Coolness >= 9, 1, 0)) %>%
+  summarise(mean(Cooler)) %>%
+  as.numeric()
+
+```
+
