@@ -1,0 +1,80 @@
+---
+title: "Lab 12 Exercises"
+author: "Erik Johnson"
+date: "April 10, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Introduction
+
+In this week's exercises you will practice writing functions and iterating -- two tools that are central to any programmer's/data scientist's toolbox.
+
+# Writing Functions
+
+R has many built-in functions like `sum()`. `sum()` is built-in because the creators of R expected that performing summations would be a common thing people would want to do. So, the creators of R wrote the code that will perform a summation for us so that we don't have to write that code everytime we want to sum the elements in a vector. This example motivates why we will want to write functions in our careers as scientists/programmers/computer scientists/data scientists/etc: so that we can do the same thing multiple times without having to rewrite the code each time. There are other reasons to use functions but this reason is one of the big ones.
+
+Here is the general syntax for creating a function in R
+```{r, eval=F}
+<function_name> <- function(<function_arguments>) {
+  # body of the function; what it does
+  # ...
+  # ...
+  return(<what_you_want_the_function_to_return_when_called>)
+}
+```
+
+For example, here is a function that takes two numeric arguments, checks whether both numbers are $\geq 0$, and returns the sum of the two numbers if they are both positive and returns an error message if one or both of the numbers is negative.
+```{r, eval=T}
+sumTwoPositiveNumbers <- function(x, y) {
+  if (x>=0 && y>=0) {
+    return(x + y)
+  } else {
+    return("both numbers must be greater than or equal to 0!")
+  }
+}
+
+sumTwoPositiveNumbers(2, 3)
+sumTwoPositiveNumbers(-1, 2)
+
+```
+
+### Exercises
+1. Write a function that returns the max of two numbers
+2. Write a function that takes a number and computes the square root of the number. If the number is negative, make sure that your function returns an error that says something like "can't take the square root of a negative number!"
+
+# Iteration
+If you have done any coding, you have probability seen "for" loops and/or "while" loops. They are ubiquitous in coding so I won't provide much motivation for their use other than to say that they are EVERYWHERE. 
+
+The for loop syntax in R is:
+```{r, eval=F}
+for (<variable> in <something>) {
+  # body of for loop
+  # ... 
+  # ...
+}
+
+```
+
+For example
+```{r, eval=T}
+
+for (i in seq(1,5)) {
+  print(i)
+}
+
+animals <- c("cat", "dog", "mouse", "horse")
+for (animal in animals) {
+  print(animal)
+}
+```
+
+### Exercises
+1. Write a function that accepts a vector of numbers and uses a for loop to calculate the sum of all the numbers. Your function should return the sum. Note that your function should work on a vector of any length. 
+2. Write a function that accepts an even number, $N$, and uses a for loop to return a vector of length $N$ containing alternating "X"'s and "O"'s. For example, if the argument of the function was 6, then the function should return the vector (X,O,X,O,X,O). 
+
+**You may now move on to your lab. Good luck.**
