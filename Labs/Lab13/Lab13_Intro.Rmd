@@ -1,0 +1,151 @@
+---
+title: "Week 13 Exercises"
+author: ""
+date: "April 17, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lab This Week
+
+You have to individually:
+
+  * write a function with another function as an argument
+  * use a new data manipulation function called "map"  
+  
+Note that you are essentially doing the same thing in both of these tasks, however we are making you implement both methods so that you can appreciate the map function more.
+
+## Preliminary
+  
+Let's start with loading our packages and generate a toy dataset to work with.
+
+```{r echo = T, message = F, warning = F}
+
+# Load tidyverse
+library(tidyverse)
+
+# Create data frame
+df <- tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+```
+
+## Functions within functions
+
+We will be working with the example from section 21.4 in *R for Data Science*. Suppose we want to create a function that computes column summary statistics, but we want the statistic to be a parameter of the function. We can do this by writing a function, with another function as an argument. Let's see how we can do this.
+
+```{r echo = T, message = F, warning = F}
+
+# Function to compute column summary
+col_summary <- function(df, fun) 
+{
+  ## Inputs:
+  # df: A data frame object
+  # fun: Function for statistic, ex. mean, median, sd, etc.
+  
+  ## Ouputs:
+  # out: Vector of summary stats for each column
+  
+  # Empty vector to store values - same length as ncol(df)
+  out <- vector("double", length(df))
+  
+  # Loop through columns of data frame
+  for (i in seq_along(df)) {
+    
+    # Compute summary statistc of column
+    out[i] <- fun(df[[i]])
+  }
+  
+  # Return summary statistics
+  return(out)
+}
+```
+
+Now let's call this function on out tibble that we generated to compute the mean.
+
+```{r echo = T, message = F, warning = F}
+
+# Compute mean column summary
+col_summary(df, mean)
+```
+
+**Exercise: Change the input function to compute a different summary statistic.**
+
+## map Functions
+
+For alot of things that usually require for loops, we can use map functions from the purrr package to achieve the same result. This allows us to avoid writing the for loop like in the last example. There are five main map functions, one for each specified output type. They are:
+
+* map()  
+* map_lgl()  
+* map_int()  
+* map_dbl()  
+* map_chr()
+
+Let's check out the folowing example, taken from *R for Data Science* section 21.5.
+
+```{r echo = T, message = F, warning = F}
+
+# Use a map function compute mean of each column
+df %>%
+  map_dbl(mean) 
+
+```
+
+**Exercise: Adapt the map function to compute the median and standard deviation of each column.**
+
+These are just basic examples. Let's get more understanding of the map function. Notice the syntax is different in the next example, however we achieve the same result.
+
+```{r echo = T, message = F, warning = F}
+
+# Use map function to compute mean
+values <- df %>%
+  map(function(df) mean(df))
+values
+```
+
+Notice that the output of the general map function is a list. We can index the list in the folowing way.
+
+```{r echo = T, message = F, warning = F}
+# Index by name
+values$a
+
+# Index by position
+values[[1]]
+```
+
+Or we could just use the map_dbl function instead to avoid the list altogether.
+
+```{r echo = T, message = F, warning = F}
+# Use map_dbl
+values <- df %>%
+  map_dbl(function(df) mean(df))
+values
+```
+
+Finally, you can also define map functions to work with your own defined functions.
+
+```{r echo = T, message = F, warning = F}
+
+# Function to compute add 10 mean
+add10mean <- function(x)
+{
+  x <- x + 10
+  return(mean(x))
+}
+
+# Way 1
+df %>%
+  map_dbl(add10mean)
+
+# Way 2
+df %>%
+  map_dbl(function(df) add10mean(df))
+```
+
+**In your lab this week, you need to show that you have ability in doing the above two tasks. Your use of maps and functions within functions don't necessarily have to be related to the permutation test part of the lab.**
