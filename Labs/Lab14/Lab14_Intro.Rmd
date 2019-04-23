@@ -1,0 +1,65 @@
+---
+title: "Lab 14 Exercises"
+author: "Erik Johnson"
+date: "April 25, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Introduction
+
+In this week's exercises you will practice some of the topics covered in chapters 23-25 in "R for Data Science." 
+
+# Linear Models
+
+Chapters 23-25 are all about modeling and are excellently written. Since you have already been tested on the material from chapters 22-25, we will assume that you have some familiarity with building and evaluating linear models. 
+
+We will be working with data from a fictional study of dragons in which we want to investigate how body length is related to dragon intelligence as measured by a test score. To do so, we go out into the mountains and collect data on dragon intelligence and body size. We collected data from eight different mountain ranges. (Note: in the data, there is a "site" column. For simplicity we will ignore this column.) You will need to download the data from [here](https://gkhajduk.d.pr/9GPn/3nbbPoK6). 
+
+Lets first load the packages and data that we will be working with. 
+
+```{r, include=T}
+library(tidyverse)
+library(modelr)
+library(stats)
+load("dragons.RData")
+head(dragons)
+```
+
+**Exercise**: Plot testScore vs. bodyLength. 
+
+From your plot, it may look like a linear model is an appropriate model to capture some of the trend in the data, i.e., `testScore = a_1 + a_2*bodyLength`. 
+
+**Exercise**: Fit a linear model using `lm()` between testScore and bodyLength. Look at the coefficients and plot the testScore-vs-bodyLength data together with the fitted line. In a separate plot, plot the residuals.
+
+Thus far, we have been doing a lot of somewhat blind coding and mathing. Let's stop and think for a second about the problem at hand. From both the linear model and the plot, it seems like bigger dragons are smarter (i.e., do better on the test). Doesn't this seem odd? Are taller people smarter than shorter people? For my (Erik's) 5'9''ish sake, I hope not. 
+
+Although it isn't discussed much in the book, all models have assumptions. And one of the assumptions of the `y=a_1 + a_2*x` type model we are looking at is that the data observations are independent. 
+
+**Exercise**: Make a boxplot of the distribution of testScores by mountainRange. Use `facet_wrap` to make scatterplots of the testScore vs. bodyLength data faceted by mountainRange. Why isn't the data we have independent?
+
+We need to take into account mountain range. So lets fit a different `y=a_1+a_2*x` type model for each mountain range. The code below does exactly this and stores the data, linear model, and model predictions for each mountain range in a list-column. Note that the `predict` function used below is from the `stats` package. For a `y=a_1 + a_2*x` model fit using `lm`, `predict` takes the `lm` model as input and outputs the model's predictions at the x values in the data.
+
+```{r, eval=F}
+by_mtnRange <- dragons %>%
+  group_by(mountainRange) %>%
+  nest()
+
+mtnRange_model <- function(df) {
+  lm(testScore ~ bodyLength, data = df)
+}
+
+by_mtnRange <- by_mtnRange %>% 
+  mutate(model = map(data, mtnRange_model)) %>%
+  mutate(pred = map(model, predict))
+```
+
+**Exercise**: Make sure you know what the above code is doing. Walk through the code line-by-line and talk amongst your team about what each piece is doing.
+
+**Exercise**: Pick three of the mountain ranges. For each of those three mountain ranges, plot the data and the fitted line.
+
+**You may now move on to your lab. Good luck.**
