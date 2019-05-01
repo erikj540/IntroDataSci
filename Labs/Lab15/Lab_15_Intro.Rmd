@@ -1,0 +1,47 @@
+---
+title: "Lab 15 Exercises"
+author: "Mike Ramsey"
+date: "May 1, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Introduction
+
+In this week's lab,, you will find one additional dataset that is completely new to you. You will use your expertise and knowledge as a Data Scientist to analyze this data and then communicate conclusions, recommendations, and findings related to interesting questions answered from the data. 
+
+Make sure you also revisit Lab 2 to reflect on how well you have accomplished your team and individual goals.
+
+# Datasets
+
+Here we present a list of websites that contain potential datasets to use.
+
+* [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets.php)  
+* [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday)  
+* [fivethirtyeight](https://github.com/fivethirtyeight/data)  
+* [BuzzFeed](https://github.com/BuzzFeedNews)  
+
+For more potential dataset soures, check out this [link](https://www.dataquest.io/blog/free-datasets-for-projects/).
+
+# Tools
+
+You have been studyinging Data Science for over 15 weeks! Using R, you are now able to effectively perform:
+
+1. Data Visualization  
+2. Data Wrangling  
+3. Summary Statistics  
+4. Permutation Tests  
+5. Linear Modeling  
+
+Did I miss anything?
+
+# Conclusion
+
+Y'all are blossoming into effective Data Scientists. For those of you that decide to continue this career path, note that this is only the beginning. Here is a picture that I took from [this website](https://towardsdatascience.com/a-long-term-data-science-roadmap-which-wont-help-you-become-an-expert-in-only-several-months-4436733e63ff) that summarizes the different skills you need as a Data Scientist.
+
+![](C:\Users\mikee\Downloads\Data_Science_Pic.png)
+
